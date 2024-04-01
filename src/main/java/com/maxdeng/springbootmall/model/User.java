@@ -1,7 +1,6 @@
 package com.maxdeng.springbootmall.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,7 +10,7 @@ public class User {
 
     private Integer userId;
 
-//    @JsonProperty("e_mail")
+    //    @JsonProperty("e_mail")
     // 讓 springboot 在轉換 User object 時，自動將這個變數的 key 轉換成 e_mail
     private String email;
 

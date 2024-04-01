@@ -4,18 +4,16 @@ import com.maxdeng.springbootmall.dao.UserDao;
 import com.maxdeng.springbootmall.dto.UserRegisterRequest;
 import com.maxdeng.springbootmall.model.User;
 import com.maxdeng.springbootmall.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+@Slf4j
 @Component
 public class UserServiceImpl implements UserService {
-
-    private final static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDao userDao;

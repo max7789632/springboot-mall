@@ -11,8 +11,7 @@ import com.maxdeng.springbootmall.model.OrderItem;
 import com.maxdeng.springbootmall.model.Product;
 import com.maxdeng.springbootmall.model.User;
 import com.maxdeng.springbootmall.service.OrderService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -22,10 +21,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class OrderServiceImpl implements OrderService {
-
-    private final static Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     private OrderDao orderDao;
@@ -48,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (!user.getEmail().equals(username)) {
-            log.warn("不能創建其他使用者 {} 的訂單，登入中的使用者: {}",user.getEmail(), username);
+            log.warn("不能創建其他使用者 {} 的訂單，登入中的使用者: {}", user.getEmail(), username);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
@@ -109,19 +107,19 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getOrders(OrderQueryParams orderQueryParams, String username) {
         User user = userDao.getUserById(orderQueryParams.getUserId());
 
-        if (user == null){
-            log.warn("查無使用者 UserId: {}",orderQueryParams.getUserId());
+        if (user == null) {
+            log.warn("查無使用者 UserId: {}", orderQueryParams.getUserId());
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         if (!user.getEmail().equals(username)) {
-            log.warn("不能查詢其他使用者 {} 的訂單，登入中的使用者: {}",user.getEmail(), username);
+            log.warn("不能查詢其他使用者 {} 的訂單，登入中的使用者: {}", user.getEmail(), username);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
         List<Order> orderList = orderDao.getOrders(orderQueryParams);
 
-        for (Order order : orderList){
+        for (Order order : orderList) {
             List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrderId());
 
             order.setOrderItemList(orderItemList);

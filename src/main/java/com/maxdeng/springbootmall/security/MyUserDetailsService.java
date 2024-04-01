@@ -3,20 +3,19 @@ package com.maxdeng.springbootmall.security;
 import com.maxdeng.springbootmall.dao.UserDao;
 import com.maxdeng.springbootmall.model.Role;
 import com.maxdeng.springbootmall.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
+@Slf4j
 @Component
 public class MyUserDetailsService implements UserDetailsService {
 
@@ -37,7 +36,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = convertToAuthorities(roleList);
 
-        System.out.println("登入帳號: " + username + ", 帳號權限: " + authorities);
+        log.info("登入帳號: " + username + ", 帳號權限: " + authorities);
 
         // 轉換成 Spring Security 指定的 User 格式
         return new org.springframework.security.core.userdetails.User(userEmail, userPassword, authorities);

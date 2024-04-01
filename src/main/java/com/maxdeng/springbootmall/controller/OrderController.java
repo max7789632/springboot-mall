@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @Validated
@@ -48,8 +46,7 @@ public class OrderController {
             Authentication authentication,
             @PathVariable Integer userId,
             @RequestParam(defaultValue = "10") @Max(1000) @Min(0) Integer limit,
-            @RequestParam(defaultValue = "0") @Min(0) Integer offset)
-    {
+            @RequestParam(defaultValue = "0") @Min(0) Integer offset) {
         // 取得登入中使用者的帳號
         String username = authentication.getName();
 
