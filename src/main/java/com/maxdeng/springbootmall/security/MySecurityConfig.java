@@ -29,20 +29,24 @@ public class MySecurityConfig {
 
                 .authorizeHttpRequests(request -> request
                         // ***管理員可以使用的API***
-                        // 新增、修改、刪除商品
-                        .requestMatchers(HttpMethod.POST, "/products", "/users/{userId}/orders").hasRole("ADMIN")
+                        // 商品新增
+                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+                        // 商品修改
                         .requestMatchers(HttpMethod.PUT, "/products/{productId}").hasRole("ADMIN")
+                        // 商品刪除
                         .requestMatchers(HttpMethod.DELETE, "/products/{productId}").hasRole("ADMIN")
 
                         // ***一般會員可以使用的API***
+                        // 訂單查詢
                         .requestMatchers(HttpMethod.GET, "/users/{userId}/orders").hasAnyRole("ADMIN", "NORMAL_USER")
+                        // 訂單新增
                         .requestMatchers(HttpMethod.POST, "/users/{userId}/orders").hasAnyRole("ADMIN", "NORMAL_USER")
 
                         // ***不需登入也能使用的API***
-                        // 註冊會員
+                        // 帳號註冊
                         .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-                        // 查詢商品
-                        .requestMatchers(HttpMethod.GET, "/products", "/products/**").permitAll()
+                        // 商品查詢、商品查詢+商品編號
+                        .requestMatchers(HttpMethod.GET, "/products", "/products/{productId}").permitAll()
 
                         // ***其餘沒設定的API都不能訪問***
                         .anyRequest().denyAll()

@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (!user.getEmail().equals(username)) {
-            log.warn("不能查詢其他使用者 {} 的訂單，登入中的使用者: {}",user.getEmail(), username);
+            log.warn("不能創建其他使用者 {} 的訂單，登入中的使用者: {}",user.getEmail(), username);
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
